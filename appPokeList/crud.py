@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
-from .models import Pokemon, Type
+from .models import Pokemon, Type , pokemon_type_association
 from .schemas import PokemonCreate, TypeCreate
 
 async def create_pokemon(db: AsyncSession, pokemon: PokemonCreate):
@@ -28,3 +28,24 @@ async def get_pokemons(db: AsyncSession):
 async def get_pokemon(db: AsyncSession, pokemon_id: int):
     result = await db.execute(select(Pokemon).where(Pokemon.id == pokemon_id).options(selectinload(Pokemon.types)))
     return result.scalars().first()
+
+
+async def get_pokemons_filtered(db: AsyncSession, type: str | None = None, name: str | None = None):
+    query = select(Pokemon).options(selectinload(Pokemon.types))
+
+    if name:
+        query = query.where(Pokemon.name == name)
+    
+    if type:
+        # Create a subquery to filter Pokemons by their types
+        subquery = (
+            select(Pokemon.id)
+            .join(pokemon_type_association)
+            .join(Type)
+            .where(Type.name == type)
+        ).subquery()
+        
+        query = query.where(Pokemon.id.in_(subquery))
+
+    result = await db.execute(query)
+    return result.scalars().all()
