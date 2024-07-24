@@ -5,7 +5,7 @@ from typing import AsyncGenerator
 from .config import settings
 
 engine = create_async_engine(
-    settings.database_url, connect_args={"check_same_thread": False}
+    settings.database_url
 )
 async_session = sessionmaker(
 	autocommit=False,
@@ -17,6 +17,11 @@ async_session = sessionmaker(
 
 Base = declarative_base()
 
+async def init_db():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
 async def get_session() -> AsyncGenerator[AsyncSession, None]:
     async with async_session() as session:
         yield session
+        
