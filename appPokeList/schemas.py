@@ -10,11 +10,11 @@ class TypeRead(TypeBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class PokemonBase(BaseModel):
     name: str
-    url: str
+    url: str|None
 
 class PokemonCreate(PokemonBase):
     types: list[TypeCreate]
@@ -24,4 +24,4 @@ class PokemonRead(PokemonBase):
     types: list[TypeRead]
 
     class Config:
-        orm_mode = True
+        from_attributes = True

@@ -8,7 +8,7 @@ from . import fetchData
 async def lifespan(app: FastAPI):
     await init_db()
     print("Fetching Data Please Wait ...")
-    # await fetchData.fetch_all_pokemon()
+    await fetchData.fetch_all_pokemon()
     print("Loaded All Data")
     yield
 

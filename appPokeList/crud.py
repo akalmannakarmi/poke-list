@@ -21,7 +21,6 @@ async def create_pokemon(db: AsyncSession, pokemon: PokemonCreate):
 	try:
 		await db.commit()
 		await db.refresh(new_pokemon)
-		print(f"Added Pokemon: {new_pokemon}")
 	except IntegrityError:
 		await db.rollback()
 		
