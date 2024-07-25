@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Filter</h1>
+<form method="get">
+	<label for="name">Name</label>
+	<input type="text" name="name" id="name" value="{{name | default('') }}"/>
+	<label for="type">Type</label>
+	<input type="text" name="type" id="type" value="{{type | default('') }}"/>
+	<button type="submit">Search</button>
+</form>
+<h1>Pokemons</h1>
+<table border="1">
+	<thead>
+		<th>Id</th>
+		<th>Name</th>
+		<th>Types</th>
+		<th>Image</th>
+	</thead>
+	<tbody>
+		{% for pokemon in pokemons %}
+		<tr>
+			<td>{{pokemon["id"]}}</td>
+			<td>{{pokemon["name"]}}</td>
+			<td>{{ pokemon["types"] | join(", ") }}</td>
+			<td><a href="{{pokemon["url"]}}">{{pokemon["url"]}}</a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<div>
+	<form method="get">
+		<input type="text" name="name" value="{{name | default('') }}" hidden>
+		<input type="text" name="type" value="{{type | default('') }}" hidden>
+		<input type="text" name="limit" value="{{limit | default(20) }}" hidden>
+		<input type="text" name="offset" value="{{(offset | default('0')) - limit | default(20) }}" hidden>
+		<button type="submit">Previous</button>
+	</form>
+	<form method="get">
+		<input type="text" name="name" value="{{name | default('') }}" hidden>
+		<input type="text" name="type" value="{{type | default('') }}" hidden>
+		<input type="text" name="limit" value="{{limit | default(20) }}" hidden>
+		<input type="text" name="offset" value="{{(offset | default('0')) + limit | default(20) }}" hidden>
+		<button type="submit">Next</button>
+	</form>
+</div>
+{% block content %}{% endblock %}
+{% endblock %}

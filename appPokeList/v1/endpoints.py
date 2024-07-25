@@ -10,6 +10,7 @@ async def read_pokemons(
 	limit: int = 20,
 	offset: int = 0
 	):
-	print(type,name)
+	if offset<0:
+		offset=0
 	async with get_session() as session:
 		return await crud.get_pokemons_filtered(session,type,name,limit,offset)
