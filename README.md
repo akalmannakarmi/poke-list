@@ -49,7 +49,7 @@ To start the project inside a docker container:
 ```bash
 make dock
 ```
-Currently Might not work. Problem with connecting
+The Docker setup does not support connecting to a database on localhost. Instead, use an external database URL. Update the .env file with the correct database URL for the external database. Ensure that the Docker container has network access to the external database.
 
 ## Usage
 ### Endpoints

@@ -6,6 +6,7 @@ from sqlalchemy import select, func
 from tqdm.asyncio import tqdm
 
 fullyUpdated = False
+API_URL = "https://pokeapi.co/api/v2/pokemon"
 
 async def get_pokemons_count(db: AsyncSession) -> int:
 	query = select(func.count(models.Pokemon.id))
@@ -24,13 +25,13 @@ async def allAdded(external_count) -> bool:
 
 async def getCount() -> int:
 	async with aiohttp.ClientSession() as session:
-		async with session.get("https://pokeapi.co/api/v2/pokemon?limit=1") as response:
+		async with session.get(API_URL+"?limit=1") as response:
 			data = await response.json()
 			return data["count"]
 
 async def fetch_all_pokemon():
 	global fullyUpdated
-	pokemon_list={"next":"https://pokeapi.co/api/v2/pokemon?limit=100&offset=0"}
+	pokemon_list={"next":API_URL+"?limit=100&offset=0"}
 
 	if fullyUpdated:
 		return

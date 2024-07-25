@@ -3,7 +3,7 @@ init:
 	. venv/bin/activate && pip install -r requirements.txt
 
 run:
-	. venv/bin/activate && fastapi dev appPokeList/main.py
+	. venv/bin/activate && uvicorn appPokeList.main:app --host 0.0.0.0 --port 8000
 
 dock:
 	@docker stop apppokelist || true
