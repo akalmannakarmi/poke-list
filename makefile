@@ -5,6 +5,14 @@ init:
 run:
 	. venv/bin/activate && fastapi dev appPokeList/main.py
 
+dock:
+	@docker stop apppokelist || true
+	@docker rm apppokelist || true
+	@docker rmi apppokelist || true
+	@docker build -t apppokelist .
+	@docker run -d -p 8000:8000\
+		--name apppokelist apppokelist 
+
 clean:
 	rm -rf venv
 	find . -type d -name "__pycache__" -exec rm -rf {} +
