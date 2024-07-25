@@ -14,6 +14,7 @@ class TypeRead(TypeBase):
 
 class PokemonBase(BaseModel):
     name: str
+    url: str
 
 class PokemonCreate(PokemonBase):
     types: list[TypeCreate]

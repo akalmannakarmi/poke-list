@@ -15,6 +15,7 @@ class Pokemon(Base):
     
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True, index=True)
+    url = Column(String)
 
     types = relationship("Type", secondary=pokemon_type_association, back_populates="pokemons")
 
