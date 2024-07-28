@@ -22,9 +22,15 @@ DATABASE_URL=postgresql+asyncpg://user:password@localhost/dbname
 
 ## Initialize Project
 To initialize the project, use the following command:
+- For Linux/MacOS
 ```bash
 make init
 ```
+- For Windows
+```bash
+make win-init
+```
+
 This command will:
 
 Set up the virtual environment
@@ -33,22 +39,40 @@ Initialize the database
 
 ## Run Project
 To start the project, run:
+- For Linux/MacOS
 ```bash
 make run
 ```
+- For Windows
+```bash
+make win-run
+```
+
 This will start the FastAPI server on the default host and port (http://127.0.0.1:8000).
 
 ## Clean Project
 To clean the project (remove virtual environment and other generated files), use:
+- For Linux/MacOS
 ```bash
 make clean
 ```
+- For Windows
+```bash
+make win-clean
+```
+
 
 ## Run Project in Docker
 To start the project inside a docker container:
+- For Linux/MacOS
 ```bash
 make dock
 ```
+- For Windows
+```bash
+make win-dock
+```
+
 The Docker setup does not support connecting to a database on localhost. Instead, use an external database URL. Update the .env file with the correct database URL for the external database. Ensure that the Docker container has network access to the external database.
 
 ## Usage
